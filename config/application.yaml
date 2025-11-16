@@ -1,10 +1,17 @@
 application:
+  config:
+    domain-detect:
+      enable: true
+      timeout: 3000
+      concurrency: 128
+      provider:
+        - 1.1.1.1
+        - 8.8.8.8
   
   # 输入配置
   input:
-    - name: 'AWAvenue-Ads-Rule'               #可选参数: 规则名称，如无将使用 path 作为名称
-      path: 'https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt' #必要参数: 规则 url (http/https) 或 本地文件位置 (绝对/相对路径)
-      type: easylist                       #可选参数: 规则类型：easylist (默认)、dnsmasq、clash、smartdns、hosts
+    - name: 'AWAvenue-Ads-Rules'               
+      path: 'https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt' 
 
     - name: 'jiekouAD'
       path: 'https://raw.githubusercontent.com/damengzhu/banad/main/jiekouAD.txt'
@@ -14,8 +21,16 @@ application:
       path: 'https://cdn.jsdelivr.net/gh/sbwml/halflife-list@master/ad.txt'
       type: easylist
 
-    - name: 'lingeringsound'
-      path: 'https://raw.githubusercontent.com/lingeringsound/adblock_auto/main/Rules/adblock_auto_lite.txt'
+    - name: '不是DD啊'
+      path: 'https://raw.githubusercontent.com/afwfv/DD-AD/main/rule/DD-AD.txt'
+      type: easylist
+
+    - name: '海哥规则'
+      path: 'https://raw.githubusercontent.com/2771936993/HG/main/hg1.txt'
+      type: easylist
+
+    - name: '晴雅广告拦截规则重置版'
+      path: 'https://raw.githubusercontent.com/790953214/qy-Ads-Rule/main/black.txt'
       type: easylist  
       
   # 输出配置
@@ -26,52 +41,31 @@ application:
       ChengZhouCR AdBlock ${type}
       Last Modified: ${date}
       Total Size: ${total}
-      Homepage: https://github.com/chengzhouCR/ChengZhouCR-AdBlock
-      Description: ${desc}
+      Homepage: https://github.com/chengzhouCR/AdBlock-Rules
+      Description: 自用的去广告规则，规则较为精简，每日自动更新。上游规则源：AWAvenue Ads Rule、jiekouAD、halflife-list、DD-AD、海哥规则、晴雅规则。
       
     files:
-      - name: adblock-smartdns.conf    #必要参数: 文件名
-        type: smartdns         #必要参数: 文件类型: easylist、dnsmasq、clash、smartdns、hosts
-        file_header:           #可选参数: 文件头配置，将自动作为注释添加至每个规则文件开始 (此处优先于 output.file_header)
-        desc: 'ChengZhouCR自用的路由器去广告规则，规则较为精简，每日自动更新。规则源：AWAvenue Ads Rule、jiekouAD、AD-J、halflife-list、lingeringsound规则。'  #可选参数: 文件描述，可在file_header中通过 ${} 中使用
+      - name: smartdns.conf    
+        type: smartdns         
+                               
+      - name: dns.txt
+        type: easylist                 
         filter:
-          - basic              #基本规则，不包含任何控制、匹配符号, 可以转换为 hosts
-          #- wildcard           #通配规则，仅使用通配符
-          #- unknown            #其他规则，如使用了正则、高级修饰符号的规则，这些规则目前无法转换为其他格式
-                               #可选参数: 限定此文件使用的规则源，如果不指定则使用 input 中的所有规则源
+          - basic             
+          - wildcard
 
-      - name: adblock-easylist.txt
-        type: easylist        
-        file_header:         
-        desc: 'ChengZhouCR自用的路由器去广告规则，规则较为精简，每日自动更新。规则源：AWAvenue Ads Rule、jiekouAD、AD-J、halflife-list、lingeringsound规则。' 
+      - name: easylist.txt
+        type: easylist                 
         filter:
-          - basic              
-          #- wildcard           
-          #- unknown
+          - basic             
+          - wildcard
+          - unknown
+      
+      - name: dnsmasq.conf
+        type: dnsmasq                
 
-      - name: adblock-dnsmasq.conf
-        type: dnsmasq        
-        file_header:         
-        desc: 'ChengZhouCR自用的路由器去广告规则，规则较为精简，每日自动更新。规则源：AWAvenue Ads Rule、jiekouAD、AD-J、halflife-list、lingeringsound规则。' 
-        filter:
-          - basic              
-          #- wildcard           
-          #- unknown
-
-      - name: adblock-hosts
+      - name: hosts
         type: hosts        
-        file_header:         
-        desc: 'ChengZhouCR自用的路由器去广告规则，规则较为精简，每日自动更新。规则源：AWAvenue Ads Rule、jiekouAD、AD-J、halflife-list、lingeringsound规则。' 
-        filter:
-          - basic              
-          #- wildcard           
-          #- unknown
-
-      - name: adblock-clash.yaml
+        
+      - name: clash.yaml
         type: clash        
-        file_header:         
-        desc: 'ChengZhouCR自用的路由器去广告规则，规则较为精简，每日自动更新。规则源：AWAvenue Ads Rule、jiekouAD、AD-J、halflife-list、lingeringsound规则。' 
-        filter:
-          - basic              
-          #- wildcard           
-          #- unknown
