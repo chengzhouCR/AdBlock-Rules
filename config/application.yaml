@@ -17,8 +17,8 @@ application:
       path: 'https://raw.githubusercontent.com/damengzhu/banad/main/jiekouAD.txt'
       type: easylist
 
-    - name: 'halflife'
-      path: 'https://cdn.jsdelivr.net/gh/sbwml/halflife-list@master/ad.txt'
+    - name: 'halflife-list'
+      path: 'https://cdn.jsdelivr.net/gh/sbwml/halflife-list@master/ad-pc.txt'
       type: easylist
 
     - name: 'DD-AD'
